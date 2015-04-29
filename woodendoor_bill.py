@@ -8,10 +8,16 @@ COMING_TIME = datetime.time(12, 15)
 
 def count_time(coming_time):
     leaving_time = datetime.datetime.time(datetime.datetime.now())
+    leaving_time = datetime.time(13, 10)
     spent_hours = leaving_time.hour - COMING_TIME.hour
     spent_minutes = leaving_time.minute - COMING_TIME.minute
+    if spent_hours < 0:
+        spent_hours += 24
+    if spent_minutes < 0:
+        spent_minutes += 60
+        spent_hours -= 1
     spent_time = {
-        'hours': spent_hours if spent_hours >= 0 else 24+spent_hours,
+        'hours': spent_hours,
         'minutes': spent_minutes
     }
     return spent_time
@@ -26,9 +32,9 @@ def count_cost(spent_time):
 
 
 def print_report(spent_time, cost):
-    print ("You had spent at WoodenDoor:\n\t{0} hour(s),"
-           "\n\t{1} minute(s).\n\nYou owe {2} rubles.").format(
-            spent_time['hours'], spent_time['minutes'], cost)
+    print("You had spent at WoodenDoor:\n\t{0} hour(s),"
+          "\n\t{1} minute(s).\n\nYou owe {2} rubles.").format(
+        spent_time['hours'], spent_time['minutes'], cost)
 
 
 def main():
