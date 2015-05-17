@@ -2,15 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import parser_arg
 
-COMING_TIME = datetime.time(12, 15)
+
+def full_coming_time(hours, minutes):
+    coming_time = datetime.time(hours, minutes)
+    return coming_time
 
 
 def count_time(coming_time):
-    leaving_time = datetime.datetime.time(datetime.datetime.now())
-    leaving_time = datetime.time(13, 10)
-    spent_hours = leaving_time.hour - COMING_TIME.hour
-    spent_minutes = leaving_time.minute - COMING_TIME.minute
+    leaving_time = datetime.datetime.now().time()
+    spent_hours = leaving_time.hour - coming_time.hour
+    spent_minutes = leaving_time.minute - coming_time.minute
     if spent_hours < 0:
         spent_hours += 24
     if spent_minutes < 0:
@@ -38,6 +41,9 @@ def print_report(spent_time, cost):
 
 
 def main():
+    COMING_TIME = full_coming_time(
+        parser_arg.COMING_TIME_HOUR,
+        parser_arg.COMING_TIME_MIN)
     spent_time = count_time(COMING_TIME)
     cost = count_cost(spent_time)
     print_report(spent_time, cost)
